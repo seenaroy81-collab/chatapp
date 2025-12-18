@@ -7,6 +7,7 @@ import { io } from "socket.io-client";
 // Examples:
 //  - VITE_SOCKET_URL=https://your-backend.onrender.com
 const BASE_URL =
+  (import.meta.env.MODE === "production" ? "/" : undefined) ||
   import.meta.env.VITE_SOCKET_URL?.trim() ||
   (import.meta.env.MODE === "development" ? "http://localhost:3000" : "/");
 

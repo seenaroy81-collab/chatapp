@@ -4,11 +4,11 @@ import axios from "axios";
 // Examples:
 //  - VITE_API_URL=https://your-backend.onrender.com/api
 // Development fallback remains localhost:3000/api
+// For Vercel proxy setup, default to /api in production. Allow overriding with VITE_API_URL if needed.
 const API_BASE_URL =
+  (import.meta.env.MODE === "production" ? "/api" : undefined) ||
   import.meta.env.VITE_API_URL?.trim() ||
-  (import.meta.env.MODE === "development"
-    ? "http://localhost:3000/api"
-    : "/api");
+  (import.meta.env.MODE === "development" ? "http://localhost:3000/api" : "/api");
 
 export const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
