@@ -6,10 +6,13 @@ import { io } from "socket.io-client";
 // Prefer explicit VITE_SOCKET_URL when deploying frontend separately (e.g., Vercel) and backend on another domain (e.g., Render)
 // Examples:
 //  - VITE_SOCKET_URL=https://your-backend.onrender.com
+// Socket.IO must connect directly to Render backend (Vercel rewrites don't support WebSocket/long-polling)
+// In production, connect to the Render backend directly; in dev, use localhost
 const BASE_URL =
-  (import.meta.env.MODE === "production" ? "/" : undefined) ||
   import.meta.env.VITE_SOCKET_URL?.trim() ||
-  (import.meta.env.MODE === "development" ? "http://localhost:3000" : "/");
+  (import.meta.env.MODE === "development"
+    ? "http://localhost:3000"
+    : "https://chatapp-1-bs15.onrender.com");
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
